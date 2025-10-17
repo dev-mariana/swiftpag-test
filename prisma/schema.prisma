@@ -1,0 +1,22 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Charge {
+  id              String   @id @default(cuid())
+  payer_name      String
+  payer_document  String
+  amount          Int     
+  description     String
+  status          String   @default("pending")
+  created_at      DateTime @default(now())
+  updated_at      DateTime @updatedAt
+
+  @@map("charge")
+}
