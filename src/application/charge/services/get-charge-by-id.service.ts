@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { NotFoundException } from 'src/common/filters/errors/not-found-error';
 import { ChargeRepository } from 'src/infra/database/prisma/repositories/charge.repository';
 import { GetChargeByIdResponse } from '../dto/get-charge-by-id.dto';
 
@@ -6,11 +7,11 @@ import { GetChargeByIdResponse } from '../dto/get-charge-by-id.dto';
 export class GetChargeByIdService {
   constructor(private chargeRepository: ChargeRepository) {}
 
-  async execute(id: string): Promise<GetChargeByIdResponse | null> {
+  async execute(id: string): Promise<GetChargeByIdResponse> {
     const charge = await this.chargeRepository.getById(id);
 
     if (!charge) {
-      return null;
+      throw new NotFoundException();
     }
 
     return {

@@ -14,7 +14,7 @@ export class GetChargeByIdController {
     param: {
       id: string;
     },
-  ): Promise<GetChargeByIdResponse | null> {
+  ): Promise<GetChargeByIdResponse> {
     return this.getChargeByIdService.execute(param.id);
   }
 }
