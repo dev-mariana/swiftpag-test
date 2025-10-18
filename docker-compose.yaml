@@ -13,5 +13,24 @@ services:
     volumes:
       - pg_data:/var/lib/pg/data
 
+  mongo:
+    image: mongo:latest
+    container_name: mongodb
+    ports:
+      - '27017:27017'
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=root@123
+      - MONGO_INITDB_DATABASE=pix-gateway
+    volumes:
+      - mongo_data:/data/db
+
+  redis:
+    image: redis:latest
+    container_name: redis
+    ports:
+      - '6379:6379'
+
 volumes:
   pg_data:
+  mongo_data:
