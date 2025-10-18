@@ -5,10 +5,12 @@ export class ChargeMapper {
   static toPrisma(charge: Charge) {
     return {
       id: charge.id,
-      payer_name: charge.payerName,
-      payer_document: charge.payerDocument,
+      payer_name: charge.payer_name,
+      payer_document: charge.payer_document,
       amount: charge.amount,
       description: charge.description,
+      pix_key: charge.pix_key,
+      expiration_date: charge.expiration_date,
       status: charge.status,
       created_at: charge.created_at,
       updated_at: charge.updated_at,
@@ -22,9 +24,11 @@ export class ChargeMapper {
       payerDocument: raw.payer_document,
       amount: raw.amount,
       description: raw.description,
+      pix_key: raw.pix_key,
+      expiration_date: raw.expiration_date,
       status: raw.status as ChargeStatus,
       created_at: raw.created_at,
       updated_at: raw.updated_at,
-    } as Charge;
+    } as unknown as Charge;
   }
 }

@@ -8,15 +8,16 @@ import { PrismaService } from '../prisma.service';
 export class ChargeRepository implements IChargeRepository {
   constructor(private readonly prisma: PrismaService) {}
 
-  async create(charge: Charge): Promise<Charge> {
+  async create(charge: Partial<Charge>): Promise<Charge> {
     const createdCharge = await this.prisma.charge.create({
       data: {
-        id: charge.id,
-        payer_name: charge.payerName,
-        payer_document: charge.payerDocument,
-        amount: charge.amount,
-        description: charge.description,
-        status: charge.status,
+        payer_name: charge?.payer_name ?? '',
+        payer_document: charge?.payer_document ?? '',
+        amount: charge?.amount ?? 0,
+        description: charge?.description ?? '',
+        pix_key: charge?.pix_key ?? '',
+        expiration_date: charge?.expiration_date ?? new Date(),
+        status: charge?.status ?? '',
       },
     });
 

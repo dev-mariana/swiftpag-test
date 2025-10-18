@@ -12,8 +12,10 @@ model Charge {
   id              String   @id @default(cuid())
   payer_name      String
   payer_document  String
-  amount          Int     
+  amount          Int
   description     String
+  pix_key         String   @unique
+  expiration_date DateTime
   status          String   @default("pending")
   created_at      DateTime @default(now())
   updated_at      DateTime @updatedAt
