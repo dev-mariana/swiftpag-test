@@ -20,8 +20,8 @@ export class ChargeMapper {
   static toDomain(raw: RawCharge): Charge {
     return {
       id: raw.id,
-      payerName: raw.payer_name,
-      payerDocument: raw.payer_document,
+      payer_name: raw.payer_name,
+      payer_document: raw.payer_document,
       amount: raw.amount,
       description: raw.description,
       pix_key: raw.pix_key,
