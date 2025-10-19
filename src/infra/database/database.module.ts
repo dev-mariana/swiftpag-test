@@ -31,6 +31,6 @@ import { ChargeRepository } from './prisma/repositories/charge.repository';
     ]),
   ],
   providers: [PrismaService, ChargeRepository],
-  exports: [PrismaService, ChargeRepository],
+  exports: [PrismaService, ChargeRepository, MongooseModule],
 })
 export class DatabaseModule {}
