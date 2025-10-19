@@ -41,13 +41,16 @@ npm install
 3. Crie e edite `.env` na raiz
 
 PORT=
+<br>
 NODE_ENV=
+<br>
 DATABASE_URL=
+<br>
 MONGODB_URI=
+<br>
 REDIS_URL=
+<br>
 RABBITMQ_URL=
-
----
 
 4. Suba serviços de infraestrutura
 
