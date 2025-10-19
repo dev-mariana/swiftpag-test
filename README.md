@@ -1,20 +1,17 @@
 # Pix Gateway API
 
-API para gerenciamento de cobranças Pix construída com NestJS, Prisma, PostgreSQL e seguindo princípios de Clean Architecture.
+API para gerenciamento de cobranças Pix construída com NestJS, TypeScript e Prisma, seguindo princípios de Clean Architecture. Suporta PostgreSQL, MongoDB, Redis e RabbitMQ.
 
 ## Tecnologias
 
-- **NestJS** - Framework Node.js progressivo
-- **TypeScript** - Linguagem fortemente tipada
-- **Prisma** - ORM para PostgreSQL
-- **PostgreSQL** - Banco de dados relacional
-- **MongoDB** - Banco de dados NoSQL para dados não estruturados
-- **Mongoose** - ODM para modelagem de dados MongoDB
-- **Redis** - Cache em memória e gerenciamento de sessões
-- **RabbitMQ** - Sistema de mensageria para comunicação assíncrona
-- **Zod** - Validação de schemas e DTOs
-- **Docker** - Containerização da aplicação
-- **Swagger** - Documentação interativa da API
+- NestJS, TypeScript
+- Prisma + PostgreSQL
+- MongoDB + Mongoose
+- Redis
+- RabbitMQ
+- Zod (validação)
+- Docker & Docker Compose
+- Swagger
 
 ---
 
@@ -26,20 +23,56 @@ API para gerenciamento de cobranças Pix construída com NestJS, Prisma, Postgre
 
 ---
 
-## Instalação
+## Instalação rápida
 
-### 1. Clone o repositório
+1. Clone o repositório
 
+```bash
 git clone https://github.com/seu-usuario/pix-gateway.git
 cd pix-gateway
+```
 
-### 2. Instale as dependências
+2. Instale dependências
 
+```bash
 npm install
+```
 
-### 3. Configure as variáveis de ambiente
+3. Crie e edite `.env` na raiz (exemplo abaixo)
 
-Crie um arquivo `.env` na raiz do projeto:
+4. Suba serviços de infraestrutura
+
+```bash
+docker-compose up -d
+```
+
+5. Gere cliente Prisma e aplique migrations (usando npm scripts)
+
+```bash
+npm run generate
+npm run migrate:dev
+npm run studio
+```
+
+(ou, alternativamente)
+
+```bash
+npx prisma generate
+npx prisma migrate dev
+npx prisma studio
+```
+
+6. Inicie a aplicação em modo desenvolvimento
+
+```bash
+npm run start:dev
+```
+
+A API ficará disponível em `http://localhost:3000`
+
+---
+
+## Exemplo de .env
 
 PORT=
 NODE_ENV=
@@ -48,79 +81,90 @@ MONGODB_URI=
 REDIS_URL=
 RABBITMQ_URL=
 
-### 4. Suba o banco de dados com Docker
+---
 
-docker-compose up -d
+## Testes
 
-### 5. Execute as migrações do Prisma
+- Unit / integração:
 
-npx prisma migrate dev
+```bash
+npm test
+```
 
-### 6. Inicie a aplicação
+- End-to-end:
 
-npm run start:dev
-
-A API estará disponível em `http://localhost:3000`
+```bash
+npm run test:e2e
+```
 
 ---
 
-## 📚 Documentação da API
+## Documentação (Swagger)
 
-Acesse a documentação interativa Swagger em:
-
-http://localhost:3000/
+A documentação interativa está disponível em:
+http://localhost:3000/swagger
 
 ---
 
-## 🗂️ Estrutura do Projeto
+## Estrutura do projeto
 
 src/
-├── application/ # Casos de uso e lógica de negócio
-│ └── charge/
-│ ├── controllers/ # Controllers HTTP
-│ ├── dto/ # DTOs e schemas Zod
-│ └── services/ # Serviços da aplicação
-├── domain/ # Entidades e regras de negócio
-│ └── charge/
-│ ├── charge.entity.ts
-│ └── charge.repository.ts
-├── infra/ # Infraestrutura e implementações
-│ └── database/
-│ ├── prisma/
-│ └── repositories/
-├── common/ # Código compartilhado
-│ ├── pipes/ # Pipes de validação
-│ └── filters/ # Filtros de exceção
-└── main.ts # Ponto de entrada da aplicação
+
+- application/ # casos de uso, controllers e services
+- domain/ # entidades e contratos
+- infra/ # implementações (Prisma, Redis, RabbitMQ, Mongo)
+- common/ # pipes, filters, utilitários
+- main.ts # ponto de entrada
 
 ---
 
-## 🛠️ Endpoints principais
+## Endpoints principais
 
-### Criar Cobrança
+- Criar cobrança
+  - POST /charges
+  - Body (JSON):
 
-POST /charges
-Content-Type: application/json
-
+```json
 {
-"payer_name": "John Doe",
-"payer_document": "12345678901",
-"amount": 15000,
-"description": "Pagamento reserva hotel"
+  "payer_name": "John Doe",
+  "payer_document": "12345678901",
+  "amount": 15000,
+  "description": "Pagamento reserva"
 }
+```
 
-### Buscar Cobrança por ID
-
-GET /charges/:id
-
----
-
-## 📄 Licença
-
-Este projeto está sob a licença MIT.
+- Buscar cobrança por id
+  - GET /charges/:id
 
 ---
 
-## 👤 Autor
+## Observações
 
-Desenvolvido por Mariana Bastos
+- Configure variáveis de ambiente para conectar Prisma, Redis, MongoDB e RabbitMQ.
+- Docker Compose já inclui serviços necessários (Postgres, MongoDB, Redis, RabbitMQ).
+- Swagger está configurado no bootstrap da aplicação.
+
+---
+
+## Contribuição
+
+1. Abra uma issue descrevendo a mudança.
+2. Crie um branch com um nome descritivo.
+3. Rode lint/tests antes de abrir PR:
+
+```bash
+npm run lint
+npm test
+```
+
+---
+
+## Licença
+
+MIT
+
+---
+
+## Autor
+
+Mariana Bastos
