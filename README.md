@@ -38,7 +38,16 @@ cd pix-gateway
 npm install
 ```
 
-3. Crie e edite `.env` na raiz (exemplo abaixo)
+3. Crie e edite `.env` na raiz
+
+PORT=
+NODE_ENV=
+DATABASE_URL=
+MONGODB_URI=
+REDIS_URL=
+RABBITMQ_URL=
+
+---
 
 4. Suba serviços de infraestrutura
 
@@ -69,17 +78,6 @@ npm run start:dev
 ```
 
 A API ficará disponível em `http://localhost:3000`
-
----
-
-## Exemplo de .env
-
-PORT=
-NODE_ENV=
-DATABASE_URL=
-MONGODB_URI=
-REDIS_URL=
-RABBITMQ_URL=
 
 ---
 
