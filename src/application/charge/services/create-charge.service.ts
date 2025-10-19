@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { randomUUID } from 'crypto';
 import { ChargeStatus } from 'src/domain/charge/charge.entity';
+import { RedisService } from 'src/infra/cache/redis/redis.service';
 import { ChargeRepository } from 'src/infra/database/prisma/repositories/charge.repository';
 import {
   CreateChargeRequest,
@@ -9,7 +10,10 @@ import {
 
 @Injectable()
 export class CreateChargeService {
-  constructor(private chargeRepository: ChargeRepository) {}
+  constructor(
+    private chargeRepository: ChargeRepository,
+    private redisService: RedisService,
+  ) {}
 
   async execute(request: CreateChargeRequest): Promise<CreateChargeResponse> {
     const pixKey = randomUUID();
@@ -24,6 +28,12 @@ export class CreateChargeService {
       expiration_date: expirationDate,
       status: ChargeStatus.PENDING,
     });
+
+    await this.redisService.set(
+      `charge:${charge.id}`,
+      JSON.stringify(charge),
+      3600,
+    );
 
     return {
       charge_id: charge.id,

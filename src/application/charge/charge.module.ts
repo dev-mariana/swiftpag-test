@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+import { RedisService } from 'src/infra/cache/redis/redis.service';
 import { DatabaseModule } from 'src/infra/database/database.module';
 import { CreateChargeController } from './controllers/create-charge.controller';
 import { GetChargeByIdController } from './controllers/get-charge-by-id.controller';
@@ -8,7 +9,7 @@ import { GetChargeByIdService } from './services/get-charge-by-id.service';
 @Module({
   imports: [DatabaseModule],
   controllers: [CreateChargeController, GetChargeByIdController],
-  providers: [CreateChargeService, GetChargeByIdService],
+  providers: [CreateChargeService, GetChargeByIdService, RedisService],
   exports: [],
 })
 export class ChargeModule {}
