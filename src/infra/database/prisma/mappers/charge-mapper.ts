@@ -11,7 +11,7 @@ export class ChargeMapper {
       description: charge.description,
       pix_key: charge.pix_key,
       expiration_date: charge.expiration_date,
-      status: charge.status,
+      status: charge.status as ChargeStatus,
       created_at: charge.created_at,
       updated_at: charge.updated_at,
     };

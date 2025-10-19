@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Charge } from '../../../../domain/charge/charge.entity';
+import { Charge, ChargeStatus } from '../../../../domain/charge/charge.entity';
 import { IChargeRepository } from '../../../../domain/charge/charge.repository';
 import { ChargeMapper } from '../mappers/charge-mapper';
 import { PrismaService } from '../prisma.service';
@@ -34,5 +34,16 @@ export class ChargeRepository implements IChargeRepository {
     }
 
     return ChargeMapper.toDomain(charge);
+  }
+
+  async updateStatus(id: string, status: ChargeStatus): Promise<Charge> {
+    const updatedCharge = await this.prisma.charge.update({
+      where: { id },
+      data: {
+        status,
+      },
+    });
+
+    return ChargeMapper.toDomain(updatedCharge);
   }
 }

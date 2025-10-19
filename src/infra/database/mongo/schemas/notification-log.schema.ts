@@ -1,7 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 
-@Schema({ timestamps: { createdAt: 'received_at' } })
+@Schema({ timestamps: { createdAt: 'received_at', updatedAt: 'updated_at' } })
 export class NotificationLog extends Document {
   @Prop({ required: true })
   charge_id: string;
