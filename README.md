@@ -52,7 +52,7 @@ REDIS_URL=
 <br>
 RABBITMQ_URL=
 
-4. Suba serviços de infraestrutura
+4. Suba serviços de infraestrutura via Docker
 
 ```bash
 docker-compose up -d
@@ -80,23 +80,7 @@ npx prisma studio
 npm run start:dev
 ```
 
-A API ficará disponível em `http://localhost:3000`
-
----
-
-## Testes
-
-- Unit / integração:
-
-```bash
-npm test
-```
-
-- End-to-end:
-
-```bash
-npm run test:e2e
-```
+A API ficará disponível em `http://localhost:3000/`
 
 ---
 
@@ -134,8 +118,56 @@ src/
 }
 ```
 
+- Response (201 Created — exemplo):
+
+```json
+{
+  "id": "cmgy9a17m00010q5sgppydsu2",
+  "payer_name": "John Doe",
+  "payer_document": "12345678901",
+  "amount": 15000,
+  "description": "Pagamento reserva",
+  "status": "pending",
+  "created_at": "2025-10-19T12:34:56.000Z"
+}
+```
+
 - Buscar cobrança por id
   - GET /charges/:id
+  - Param (id)
+  - Response (200 OK — exemplo):
+
+```json
+{
+  "id": "cmgy9a17m00010q5sgppydsu2",
+  "payer_name": "John Doe",
+  "payer_document": "12345678901",
+  "amount": 15000,
+  "description": "Pagamento reserva",
+  "status": "paid",
+  "paid_at": "2025-10-20T08:15:30.000Z",
+  "created_at": "2025-10-19T12:34:56.000Z"
+}
+```
+
+- Simular pagamento
+  - POST /simulate-payment
+  - Descrição: simula o processamento de pagamento para a cobrança indicada.
+  - Body (JSON):
+
+```json
+{
+  "charge_id": "cmgy9a17m00010q5sgppydsu2"
+}
+```
+
+- Response (200 OK — exemplo):
+
+```json
+{
+  "message": "Payment simulation queued"
+}
+```
 
 ---
 
@@ -144,19 +176,6 @@ src/
 - Configure variáveis de ambiente para conectar Prisma, Redis, MongoDB e RabbitMQ.
 - Docker Compose já inclui serviços necessários (Postgres, MongoDB, Redis, RabbitMQ).
 - Swagger está configurado no bootstrap da aplicação.
-
----
-
-## Contribuição
-
-1. Abra uma issue descrevendo a mudança.
-2. Crie um branch com um nome descritivo.
-3. Rode lint/tests antes de abrir PR:
-
-```bash
-npm run lint
-npm test
-```
 
 ---
 
