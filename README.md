@@ -171,14 +171,6 @@ src/
 
 ---
 
-## Observações
-
-- Configure variáveis de ambiente para conectar Prisma, Redis, MongoDB e RabbitMQ.
-- Docker Compose já inclui serviços necessários (Postgres, MongoDB, Redis, RabbitMQ).
-- Swagger está configurado no bootstrap da aplicação.
-
----
-
 ## Licença
 
 MIT
